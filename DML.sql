@@ -73,4 +73,36 @@ SELECT
     TRUNCATE(precio, 0) AS precio_truncado
 FROM
     producto;
-    -- 11. Lista el identificador de los fabricantes que tienen productos en la tabla producto
+-- 11. Lista el identificador de los fabricantes que tienen productos en la tabla producto
+ SELECT DISTINCT f.codigo AS id_fabricante
+FROM fabricante f
+INNER JOIN producto p ON f.codigo = p.codigo_fabricante;
+-- 12. Lista el identificador de los fabricantes que tienen productos en la tabla producto, eliminando los identificadores que aparecen repetidos
+select distinct codigo_fabricante from producto;
+-- 13. Lista los nombres de los fabricantes ordenados de forma ascendente.
+SELECT nombre AS nombre_fabricante
+FROM fabricante
+ORDER BY nombre ASC;
+-- 14.Lista los nombres de los fabricantes ordenados de forma descendente
+SELECT nombre AS nombre_fabricante
+FROM fabricante
+ORDER BY nombre desc;
+-- 15.Lista los nombres de los productos ordenados en primer lugar por el nombre de forma ascendente y en segundo lugar por el precio de forma descendente
+SELECT nombre AS nombre_producto, precio
+FROM producto
+ORDER BY nombre ASC, precio DESC;
+-- 16. Devuelve una lista con las 5 primeras filas de la tabla fabricante.
+select * from fabricante limit 5;
+-- 17.Devuelve una lista con 2 filas a partir de la cuarta fila de la tabla fabricante. La cuarta fila también se debe incluir en la respuesta.
+SELECT *
+FROM fabricante
+LIMIT 2 OFFSET 3;
+-- 18. Lista el nombre y el precio del producto más barato. (Utilice solamente las cláusulas ORDER BY y LIMIT)
+select nombre, precio
+from producto 
+order by precio asc limit 1;
+-- 19. Lista el nombre y el precio del producto más caro. (Utilice solamente las cláusulas ORDER BY y LIMIT)
+select nombre, precio
+from producto 
+order by precio desc limit 1;
+-- 20.Lista el nombre de todos los productos del fabricante cuyo identificador de fabricante es igual a 2.
