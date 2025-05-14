@@ -8,11 +8,11 @@ call agregar_fabricante("Gigabyte");
 call agregar_fabricante("Huawei");
 call agregar_fabricante("Xiaomi");
 
-call agregar_producto("Disco duro SATA3 1TB",86.99,6);
-call agregar_producto("Memoria RAM DDR4 8GB",120,7);
-call agregar_producto("Disco SSD 1 TB",150.99,5);
-call agregar_producto("GeForce GTX 1050Ti",185,8);
-call agregar_producto("GeForce GTX 1080 Xtreme",755,7);
+call agregar_producto("Disco duro SATA3 1TB",86.99,5);
+call agregar_producto("Memoria RAM DDR4 8GB",120,6);
+call agregar_producto("Disco SSD 1 TB",150.99,4);
+call agregar_producto("GeForce GTX 1050Ti",185,7);
+call agregar_producto("GeForce GTX 1080 Xtreme",755,6);
 call agregar_producto("Monitor 24 LED Full HD",202,1);
 call agregar_producto("Monitor 27 LED Full HD",245.99,1);
 call agregar_producto("Portátil Yoga 520",559,2);
@@ -73,3 +73,4 @@ SELECT
     TRUNCATE(precio, 0) AS precio_truncado
 FROM
     producto;
+    -- 11. Lista el identificador de los fabricantes que tienen productos en la tabla producto
