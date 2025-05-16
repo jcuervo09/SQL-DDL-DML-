@@ -243,3 +243,79 @@ from producto p
 inner join fabricante f on p.codigo_fabricante = f.codigo
 where f.nombre in ("Asus", "Hewlett-Packard","Seagate");
 -- 10. Devuelve un listado con el nombre y el precio de todos los productos de los fabricantes cuyo nombre termine por la vocal e
+select p.nombre, p.precio
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+where f.nombre like ("%e");
+-- 11. Devuelve un listado con el nombre y el precio de todos los productos cuyo nombre de fabricante contenga el carácter w en su nombre
+select p.nombre, p.precio
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+where f.nombre like ("%w%");
+-- 12. Devuelve un listado con el nombre de producto, precio y nombre de fabricante, de todos los productos que tengan un precio mayor o igual a 180€. Ordene el resultado en primer lugar por el precio (en orden descendente) y en segundo lugar por el nombre (en orden ascendente)
+select p.nombre as nombre_producto,
+ p.precio, f.nombre as nombre_fabricante
+from producto p
+inner join fabricante f on f.codigo = p.codigo_fabricante
+where p.precio >= 180
+order by 
+p.precio desc,
+p.nombre asc;
+-- 13. Devuelve un listado con el identificador y el nombre de fabricante, solamente de aquellos fabricantes que tienen productos asociados en la base de datos.
+select distinct f.codigo as codigo_fabricante,
+f.nombre as nombre_fabricante
+from fabricante f
+inner join producto p on p.codigo_fabricante = f.codigo;
+
+
+-- 1.1.5 Consultas multitabla (Composición externa)
+-- 1. Devuelve un listado de todos los fabricantes que existen en la base de datos, junto con los productos que tiene cada uno de ellos. El listado deberá mostrar también aquellos fabricantes que no tienen productos asociados
+select f.nombre as nombre_fabricante,
+p.nombre as nombre_producto
+from
+    producto p
+right join
+    fabricante f on p.codigo_fabricante = f.codigo;
+-- 2. Devuelve un listado donde sólo aparezcan aquellos fabricantes que no tienen ningún producto asociado.
+select f.nombre as nombre_fabricante,
+p.nombre as nombre_producto
+from 
+producto p
+right join 
+fabricante f on p.codigo_fabricante = f.codigo
+where p.nombre is null;
+-- 3. ¿Pueden existir productos que no estén relacionados con un fabricante? Justifique su respuesta
+-- rta: en esta base de datos si, por que no se prohibio el uso de datos null en la creacion de las tablas y al no haberlo hecho se permite que en la insercion de datos puedan quedar campos sin ingresar datos.
+
+
+-- 1.1.6 Consultas resumen
+-- 1.Calcula el número total de productos que hay en la tabla productos
+select count(*) as total_productos
+from producto;
+-- 2.Calcula el número total de fabricantes que hay en la tabla fabricante.
+select count(*) as total_fabricantes
+from fabricante;
+-- 3.Calcula el número de valores distintos de identificador de fabricante aparecen en la tabla productos.
+select count(distinct codigo_fabricante) as total_fabricantes_distintos
+from producto;
+-- 4.Calcula la media del precio de todos los productos.
+select avg(precio) as media_precio
+from producto;
+-- 5.Calcula el precio más barato de todos los productos
+select min(precio) as mas_eco
+from producto;
+-- 6.Calcula el precio más caro de todos los productos
+select max(precio) as mas_caro
+from producto;
+-- 7.Lista el nombre y el precio del producto más barato
+select nombre as nombre_producto,
+min(precio) as mas_eco
+from producto;
+-- 8.Lista el nombre y el precio del producto más caro.
+select nombre as nombre_producto,
+max(precio) as mas_caro
+from producto;
+-- 9.Calcula la suma de los precios de todos los productos.
+select sum(precio) as total_productos
+from producto;
+-- 10.Calcula el número de productos que tiene el fabricante Asus.
