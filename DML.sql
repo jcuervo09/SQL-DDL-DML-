@@ -106,3 +106,140 @@ select nombre, precio
 from producto 
 order by precio desc limit 1;
 -- 20.Lista el nombre de todos los productos del fabricante cuyo identificador de fabricante es igual a 2.
+SELECT p.nombre AS nombre_producto
+FROM producto p
+INNER JOIN fabricante f ON p.codigo_fabricante = f.codigo
+WHERE f.codigo = 2;
+-- 21. Lista el nombre de los productos que tienen un precio menor o igual a 120€
+SELECT nombre 
+FROM producto
+where precio <= 120;
+-- 22. Lista el nombre de los productos que tienen un precio mayor o igual a 400€
+SELECT nombre 
+FROM producto
+where precio >= 400;
+-- 23. Lista el nombre de los productos que no tienen un precio mayor o igual a 400€
+SELECT nombre 
+FROM producto
+where precio < 400;
+-- 24. Lista todos los productos que tengan un precio entre 80€ y 300€. Sin utilizar el operador BETWEEN.
+SELECT nombre, precio
+FROM producto
+WHERE precio >= 80 AND precio <= 300;
+-- 25. Lista todos los productos que tengan un precio entre 60€ y 200€. Utilizando el operador BETWEEN
+SELECT nombre, precio
+FROM producto
+WHERE precio BETWEEN 60 AND 200;
+-- 26. Lista todos los productos que tengan un precio mayor que 200€ y que el identificador de fabricante sea igual a 6
+select *
+from producto
+where precio > 200 and codigo_fabricante =6;
+-- 27. . Lista todos los productos donde el identificador de fabricante sea 1, 3 o 5. Sin utilizar el operador IN.
+SELECT *
+FROM producto
+WHERE codigo_fabricante = 1 OR codigo_fabricante = 3 OR codigo_fabricante = 5;
+-- 28. Lista todos los productos donde el identificador de fabricante sea 1, 3 o 5. Utilizando el operador IN.
+
+SELECT *
+FROM producto
+WHERE codigo_fabricante IN (1, 3, 5);
+-- 29. Lista el nombre y el precio de los productos en céntimos (Habrá que multiplicar por 100 el valor del precio). Cree un alias para la columna que contiene el precio que se llame céntimos.
+select nombre, precio*100 as centimos
+from producto;
+-- 30. Lista los nombres de los fabricantes cuyo nombre empiece por la letra S
+SELECT nombre
+FROM fabricante
+WHERE nombre LIKE 'S%';
+-- 31. Lista los nombres de los fabricantes cuyo nombre empiece por la letra S
+SELECT nombre
+FROM fabricante
+WHERE nombre LIKE 'S%';
+-- 32. Lista los nombres de los fabricantes cuyo nombre termine por la vocal e
+SELECT nombre
+FROM fabricante
+WHERE nombre LIKE '%e';
+-- 33. Lista los nombres de los fabricantes cuyo nombre sea de 4 caracteres.
+SELECT nombre
+FROM fabricante
+WHERE LENGTH(nombre) = 4;
+-- 34. Devuelve una lista con el nombre de todos los productos que contienen la cadena Portátil en el nombre.
+SELECT nombre
+FROM producto
+WHERE nombre like "%Portátil%";
+-- 35. Devuelve una lista con el nombre de todos los productos que contienen la cadena Monitor en el nombre y tienen un precio inferior a 215 €.
+SELECT nombre
+FROM producto
+WHERE nombre like "%Monitor%" and precio <215;
+-- 36. 36. Lista el nombre y el precio de todos los productos que tengan un precio mayor o igual a 180€. Ordene el resultado en primer lugar por el precio (en orden descendente) y en segundo lugar por el nombre (en orden ascendente).
+SELECT nombre, precio
+FROM producto
+WHERE precio >= 180
+ORDER BY precio DESC, nombre ASC;
+
+
+-- 1.1.4 Consultas multitabla (Composición interna)
+-- 1. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos.
+select p.nombre as nombre_producto,p.precio,
+f.nombre as nombre_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo;
+-- 2. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos. Ordene el resultado por el nombre del fabricante, por orden alfabético.
+select p.nombre as nombre_producto,p.precio,
+f.nombre as nombre_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+order by nombre_fabricante asc;
+-- 3. Devuelve una lista con el identificador del producto, nombre del producto, identificador del fabricante y nombre del fabricante, de todos los productos de la base de datos.
+select p.codigo as codigo_producto,
+p.nombre as nombre_producto,
+f.codigo as codigo_fabricante,
+f.nombre as nombre_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo;
+-- 4. Devuelve el nombre del producto, su precio y el nombre de su fabricante, del producto más barato
+select p.nombre as nombre_producto,
+p.precio,
+f.nombre as nombre_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+order by precio asc limit 1;
+-- 5. Devuelve el nombre del producto, su precio y el nombre de su fabricante, del producto más caro
+select p.nombre as nombre_producto,
+p.precio,
+f.nombre as nombre_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+order by precio desc limit 1;
+-- 6. Devuelve una lista de todos los productos del fabricante Lenovo
+select p.codigo,
+p.nombre as nombre_producto,
+p.precio,
+p.codigo_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+where f.nombre = "Lenovo";
+-- 7. Devuelve una lista de todos los productos del fabricante Crucial que tengan un precio mayor que 200€
+select p.codigo,
+p.nombre as nombre_producto,
+p.precio,
+p.codigo_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+where f.nombre = "Crucial"and p.precio >200;
+-- 8. Devuelve un listado con todos los productos de los fabricantes Asus, HewlettPackardy Seagate. Sin utilizar el operador IN
+select p.codigo,
+p.nombre as nombre_producto,
+p.precio,
+p.codigo_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+where f.nombre = "Asus" or f.nombre = "Hewlett-Packard" or f.nombre = "Seagate";
+-- 9. Devuelve un listado con todos los productos de los fabricantes Asus, HewlettPackardy Seagate. Utilizando el operador IN
+select p.codigo,
+p.nombre as nombre_producto,
+p.precio,
+p.codigo_fabricante
+from producto p
+inner join fabricante f on p.codigo_fabricante = f.codigo
+where f.nombre in ("Asus", "Hewlett-Packard","Seagate");
+-- 10. Devuelve un listado con el nombre y el precio de todos los productos de los fabricantes cuyo nombre termine por la vocal e
